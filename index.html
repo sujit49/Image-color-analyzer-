@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Color Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .color-box {
+            display: inline-block;
+            width: 150px;
+            height: 150px;
+            margin: 20px;
+            border: 1px solid #000;
+            text-align: center;
+            line-height: 150px;
+            color: white; /* Default text color */
+            font-weight: bold;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .color-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find the Most Common Colors in an Image</h1>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    {% if image %}
+        <div class="container">
+            <h2>Uploaded Image:</h2>
+            <img src="{{ url_for('static', filename='uploads/' ~ image) }}" alt="Uploaded Image" width="300">
+
+            <h2>Most Common Colors:</h2>
+            <div class="color-details">
+                {% for color in colors %}
+                    <div class="color-box" style="background-color: {{ color.color }}; color: {{ color.text_color }};">
+                        {{ color.color }}<br>({{ color.count }} pixels)
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</body>
+</html>
+
+
